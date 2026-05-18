@@ -4,7 +4,7 @@ from flask import Flask, render_template_string, request
 
 app = Flask(__name__)
 
-# Base de dados local com cervejarias brasileiras
+
 CERVEJARIAS_BRASILEIRAS = [
     {
         "name": "Ambev",
@@ -218,7 +218,6 @@ def index():
         beer = request.form.get('beer', '').strip()
 
         try:
-            # Primeiro tenta a base de dados brasileira
             brasileira = buscar_brasileira(beer)
 
             if brasileira:
@@ -240,7 +239,6 @@ def index():
                 </div>
                 """
             else:
-                # Se não encontrou no Brasil, busca na API internacional
                 data = get_beer_data(beer)
 
                 if data and len(data) > 0:
@@ -263,7 +261,7 @@ def index():
         except Exception as e:
             result_html = f"<p style='color:red;'>Ocorreu um erro: {str(e)}</p>"
 
-    # Lista de cervejarias brasileiras para exibir como sugestão
+
     sugestoes_br = ", ".join([c["name"] for c in CERVEJARIAS_BRASILEIRAS[:8]])
 
     return render_template_string("""
